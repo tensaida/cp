@@ -1,14 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int Xarr[251], Yarr[251], mult[251][500], res[500];
-
 int main() {
 	ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-	freopen("in.txt","r",stdin);
-	freopen("out.txt","w",stdout);
+	// freopen("in.txt","r",stdin);
+	// freopen("out.txt","w",stdout);
 	string X, Y;
 	while (cin >> X && cin >> Y) {
 
@@ -18,6 +16,11 @@ int main() {
 			cout << 0 << '\n';
 			continue;
 		}
+
+		vector<int> Xarr(X.size());
+		vector<int> Yarr(Y.size());
+		vector< vector<int> > mult(X.size(), vector<int>(X.size() + Y.size()));
+		vector<int> res(X.size() + Y.size());
 
 		int ind = 0;
 		for (int i = X.size()-1; i >= 0; i--)
