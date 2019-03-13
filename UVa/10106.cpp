@@ -1,78 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+const int N = 600;
+int a[N], i;
+string x, y;
+
 int main() {
 	ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-	// freopen("in.txt","r",stdin);
-	// freopen("out.txt","w",stdout);
-	string X, Y;
-	while (cin >> X && cin >> Y) {
+	
+	while (cin >> x) {
+		cin >> y;
+		memset(a, 0, sizeof(a));
+		reverse(x.begin(), x.end());
+		reverse(y.begin(), y.end());
 
+		for (i = 0; i < x.size(); i++)
+			for (int j = 0; j < y.size(); j++)
+				a[i+j] += (x[i]-'0')*(y[j]-'0');
 
-		if ((X.size() == 1 && X[0] == '0') || (Y.size() == 1 && Y[0] == '0'))
-		{
-			cout << 0 << '\n';
-			continue;
+		for (i = 0; i < N-1; i++) {
+			a[i+1] += a[i] / 10;
+			a[i] %= 10;
 		}
 
-		vector<int> Xarr(X.size());
-		vector<int> Yarr(Y.size());
-		vector< vector<int> > mult(X.size(), vector<int>(X.size() + Y.size()));
-		vector<int> res(X.size() + Y.size());
-
-		int ind = 0;
-		for (int i = X.size()-1; i >= 0; i--)
-			Xarr[ind++] = X[i] - '0';
-		ind = 0;
-		for (int i = Y.size()-1; i >= 0; i--)
-			Yarr[ind++] = Y[i] - '0';
-		ind = 0;
-
-		for (int i = 0; i < X.size(); i++) {
-			int rem = 0;
-			for (int j = 0; j < Y.size() + 1; j++) {
-				mult[i][j+ind] = Xarr[i]*Yarr[j] + rem;
-
-				if (j == Y.size())
-					mult[i][j+ind] = rem;
-
-				if (mult[i][j+ind] >= 10)
-				{
-					rem = (mult[i][j+ind]/10) % 10;
-					mult[i][j+ind] -= rem*10; 
-				} else rem = 0;
-				//cout << "i,j=" << i << "," << j+ind << "  " << mult[i][j+ind] << " "; 
-			}
-			//cout << endl;
-			ind++;
-		}
-
-		int rem = 0;
-		for (int j = 0; j < Y.size()+ind; j++) {
-			int sum = 0;
-			
-			for (int i = 0; i < X.size(); i++) {
-				sum += mult[i][j];	
-			}
-
-			res[j] = sum + rem;
-			
-			if (res[j] >= 10 && j != Y.size()+ind - 1) {
-				rem = (res[j]/10);
-				res[j] -= rem*10; 
-			} else rem = 0;
-		
-		}
-
-		bool zero = true;
-		
-		for (int i = Y.size()+ind-1; i >= 0; i--) {
-			if (zero && res[i] != 0) zero = false;
-			if (!zero) cout << res[i];
-		}
-
-		cout << '\n';
+		while (i > 0 && a[i] == 0) i--;
+		for (; i >= 0; i--) cout << a[i];
+		cout << '\n';	
 	}
 }
