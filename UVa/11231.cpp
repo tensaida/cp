@@ -9,13 +9,17 @@ void in(){
 }
 #define endl '\n'
 
-int s(int r, int c, int col) {
-	int n;
-	if ((!(c&1) && col) || ((c&1) && !col)) 
-		n = (c-6)/2;
-	else n = (c-7)/2;
-	int ans = (r-7)*n;
-	return (ans<=0)?0:ans;
+int s(int r, int c, bool col) {
+	int ans = 0;
+	while (r-- > 7) {
+		int n;
+		if ((!(c&1) && col) || ((c&1) && !col)) 
+			n = (c-6)/2;
+		else n = (c-7)/2;
+		ans += (n <= 0) ? 0 : n;
+		col = !col;
+	}
+	return ans;
 }
 
 int main() {
