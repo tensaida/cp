@@ -1,34 +1,19 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define pii pair<int, int>
+#define sz 101
+int p[sz], s[sz], m[sz];
+
 int main() {
-	int n; cin >> n;
-	int m; cin >> m;
-	int k; cin >> k;
-	vector<int> powers(n+1);
-	vector<int> index(n+1);
-	for (int i = 1; i <= n; i++)
-		cin >> powers[i];
-	for (int i = 1; i <= n; i++)
-		cin >> index[i];
-	set<int> chosen;
-	for (int i = 1; i <= k; i++)
-	{
-		int t; cin>>t;
-		chosen.insert(t);
+	int n,m1,k;
+	cin >> n >>m1 >> k;
+	for(int i=1;i<=n;i++)cin>>p[i];
+	for(int i=1;i<=n;i++)cin>>s[i];
+	for(int i=1;i<=n;i++)
+		m[s[i]]=max(m[s[i]],p[i]);
+	int res=0;
+	while(k--){
+		int t;cin>>t;
+		if(p[t]!=m[s[t]])res++;
 	}
-	for (int i = 1; i <= m; i++) {
-		int maxp = 0, maxid = 0;
-		for (int j = 1; j <= n; j++)
-			if (index[j] == i)
-			{
-				if (maxp < powers[j])
-				{
-					maxp = powers[j];
-					maxid = j;
-				}
-			}
-		chosen.erase(maxid);	
-	}
-	cout << chosen.size();
+	cout<<res;
 }
