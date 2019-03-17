@@ -1,24 +1,24 @@
-import java.util.Arrays;
+import java.util.Map;
 import java.util.Scanner;
-import java.util.stream.IntStream;
+import java.util.TreeMap;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        int[] a = new int[n];
-        IntStream.range(0, n).forEach(e -> a[e] = (sc.nextInt()));
-        Arrays.sort(a);
-        if (a[0] == a[n - 1]) System.out.println(0);
-        else {
-            int res = n;
-            int i = 0;
-            while (i < n && a[i] == a[0]) i++;
-            res -= i;
-            i = n - 1;
-            while (i > 0 && a[i] == a[n - 1]) i--;
-            res -= (n - i - 1);
-            System.out.println(res);
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+        for (int i = 0; i < n; i++) {
+            int key = sc.nextInt();
+            if (map.containsKey(key))
+                map.put(key, map.get(key) + 1);
+            else map.put(key, 1);
         }
+        int res = 0;
+        for (Map.Entry<Integer, Integer> e : map.entrySet()) {
+            if (map.lowerKey(e.getKey()) != null)
+                if (map.higherKey(e.getKey()) != null)
+                    res += e.getValue();
+        }
+        System.out.println(res);
     }
 }
