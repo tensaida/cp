@@ -7,40 +7,16 @@ public class TheSeasonalWar {
 
     private char[][] grid;
     private int n;
+    private final int[] dx = {0,1,1,1,0,-1,-1,-1};
+    private final int[] dy = {1,1,0,-1,-1,-1,0,1};
 
     private int f(int x, int y) {
         grid[x][y] = 'V';
-        if (valid(x + 1, y) && grid[x + 1][y] == '1') {
-            grid[x + 1][y] = 'V';
-            f(x + 1, y);
-        }
-        if (valid(x - 1, y) && grid[x - 1][y] == '1') {
-            grid[x - 1][y] = 'V';
-            f(x - 1, y);
-        }
-        if (valid(x + 1, y + 1) && grid[x + 1][y + 1] == '1') {
-            grid[x + 1][y + 1] = 'V';
-            f(x + 1, y + 1);
-        }
-        if (valid(x - 1, y - 1) && grid[x - 1][y - 1] == '1') {
-            grid[x - 1][y - 1] = 'V';
-            f(x - 1, y - 1);
-        }
-        if (valid(x + 1, y - 1) && grid[x + 1][y - 1] == '1') {
-            grid[x + 1][y - 1] = 'V';
-            f(x + 1, y - 1);
-        }
-        if (valid(x - 1, y + 1) && grid[x - 1][y + 1] == '1') {
-            grid[x - 1][y + 1] = 'V';
-            f(x - 1, y + 1);
-        }
-        if (valid(x, y + 1) && grid[x][y + 1] == '1') {
-            grid[x][y + 1] = 'V';
-            f(x, y + 1);
-        }
-        if (valid(x, y - 1) && grid[x][y - 1] == '1') {
-            grid[x][y - 1] = 'V';
-            f(x, y - 1);
+        for (int i = 0; i < 8; i++) {
+            int x1 = x + dx[i];
+            int y1 = y + dy[i];
+            if (valid(x1,y1) && grid[x1][y1] == '1')
+                f(x1,y1);
         }
         return 1;
     }
